@@ -11,7 +11,16 @@ $.when(pgReady, jqmReady).then(function() {
             targetWidth: 290,
             targetHeight: 500,
         }
-        navigator.camera.getPicture(gotPicture, onError, cameraOptions);
+
+        navigator.camera.getPicture(
+            function(imageURI) {
+                imageLoadedURI = imageURI;
+                loadPhotoInCanvas();
+            }, 
+            function(error) {
+                console.log(error);
+            }, 
+            cameraOptions);
     }
    
     function loadPhotoInCanvas() {
@@ -23,16 +32,6 @@ $.when(pgReady, jqmReady).then(function() {
             ctx.drawImage(img,0,0);
             console.log("app :: updated canvas");
         }
-    }
-
-    // called after using the camera 
-    function gotPicture(imageURI) {
-        imageLoadedURI = imageURI; 
-        loadPhotoInCanvas();
-    }
-
-    function onError(error) {
-        console.log(error);
     }
 
     function applyEffect(event) {
