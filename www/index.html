@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Instaphonegap</title>
+
+    <!-- jquery mobile -->    
+    <link rel="stylesheet" href="lib/jquery.mobile-1.2.0.min.css">
+    <script src="lib/jquery-1.8.3.min.js"></script>
+    <script src="lib/jquery.mobile-1.2.0.min.js"></script>
+    <script src="js/effects.js" type="text/javascript"></script>
+
+    <!-- phonegap -->
+    <script src="cordova-2.6.0.js" type="text/javascript"></script>
+
+    <!-- the app -->
+    <script src="js/env.js"></script>
+    <script src="js/app.js"></script>
+
+</head>
+
+<body> 
+
+<!-- main page -->
+<div data-role="page" id="main">
+    <div data-role="header">
+        <h1>Edit photo</h1>
+        <a href="#upload-page" data-transition="slide"
+            class="ui-btn-right">Next</a>
+    </div>
+
+    <div data-role="content">
+        <div data-role="controlgroup" data-type="horizontal">
+           <a href="#" data-role="button">Sepia</a>
+           <a href="#" data-role="button" id="gray-button">Grayscale</a>
+           <a href="#" data-role="button">Reset</a>
+       </div>
+       <div class="canvas-wrapper" 
+           style="width:280px; height:280px; padding:4px; background:white">
+           <canvas id="photo" width="280px" height="280px" 
+           style="background:black">
+           </canvas>
+       </div>
+
+        <button id="take-photo-button" data-theme="b">Take photo</button>
+    </div>
+
+</div>  
+<!-- end main page -->
+
+<!-- upload page -->
+<div data-role="page" id="upload-page" data-add-back-btn="true">
+    <div data-role="header">
+       <h1>Share photo</h1>
+    </div>
+
+    <img id="photo-2"/>
+    <div data-role="content">
+        <button id="upload-button" data-theme="b">Upload photo</button>
+        <p id="message">
+        </p>
+        <img id="indicator" src="img/loader.gif" style="display:none"> 
+    </div>
+</div>   
+<!-- end upload page -->
+
+</body>
+
+</html>
