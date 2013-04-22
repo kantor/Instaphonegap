@@ -31,7 +31,6 @@ $.when(pgReady, jqmReady).then(function() {
         console.log(error);
     }
 
-
     function applyEffect(event) {
 
         effect = event.data.effect;
@@ -56,4 +55,9 @@ $.when(pgReady, jqmReady).then(function() {
                 "elementId": "photo"
             }, applyEffect);
 
+    $("#sepia-button").on("tap",
+            {
+                "effect": sepia,
+                "elementId": "photo"
+            }, applyEffect);
 });
