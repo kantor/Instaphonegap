@@ -1,5 +1,7 @@
 $.when(pgReady, jqmReady).then(function() {
 
+    var imageLoadedURI = null;
+
     function takePhoto() {
 
         console.log("app :: camera bottom pressed");
@@ -12,19 +14,21 @@ $.when(pgReady, jqmReady).then(function() {
         navigator.camera.getPicture(gotPicture, onError, cameraOptions);
     }
    
-    // called after using the camera 
-    function gotPicture(imageURI) {
-        $("#image").attr("src", imageURI);  
-        imageLoadedURI = imageURI; 
-
-        // update canvas element
+    function loadPhotoInCanvas() {
+        
         var ctx = document.getElementById("photo").getContext("2d");
         var img = new Image();
-        img.src = imageURI;
+        img.src = imageLoadedURI;
         img.onload = function() {
             ctx.drawImage(img,0,0);
             console.log("app :: updated canvas");
         }
+    }
+
+    // called after using the camera 
+    function gotPicture(imageURI) {
+        imageLoadedURI = imageURI; 
+        loadPhotoInCanvas();
     }
 
     function onError(error) {
@@ -44,6 +48,7 @@ $.when(pgReady, jqmReady).then(function() {
         //window.resolveLocalFileSystemURI(imageLoadedURI, gotURI, fail);
     }
 
+
     // take a photo from the camera
     $("#take-photo-button").tap(takePhoto);
 
@@ -60,4 +65,7 @@ $.when(pgReady, jqmReady).then(function() {
                 "effect": sepia,
                 "elementId": "photo"
             }, applyEffect);
+
+    $("#reset-button").on("tap", loadPhotoInCanvas);
+
 });
