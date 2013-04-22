@@ -43,10 +43,44 @@ $.when(pgReady, jqmReady).then(function() {
         var imageData = ctx.getImageData(0,0,290,500);
         newImageData = effect(imageData);
         ctx.putImageData(newImageData, 0, 0);
-
-        //window.resolveLocalFileSystemURI(imageLoadedURI, gotURI, fail);
     }
 
+    function writerCreated(writer) {
+
+        var newData = $("#photo").get(0).toDataURL("image/png");
+        writer.write(newData);
+
+        var uploadOptions = new FileUploadOptions();
+        uploadOptions.fileKey = "file";
+        uploadOptions.mimeType = "image/png";
+        uploadOptions.chunkedMode = false;
+
+        var fileTransfer = new FileTransfer();
+
+        //fileTransfer.upload(imageLoadedURI, "http://instaphonegap.appspot.com/upload",
+        //         fileUploaded, onError, options);
+        
+        fileTransfer.upload(imageLoadedURI, "http://instaphonegap.appspot.com/upload",
+            function() {
+                $("#indicator").attr("style", "display:none");     
+            },
+            fail,
+            uploadOptions);
+    }
+
+    function uploadPhoto() {
+        
+        $("#indicator").attr("style", "display:block");
+
+        window.resolveLocalFileSystemURI(imageLoadedURI,
+                function(file) {
+                    file.createWriter(writerCreated, fail);
+                }, fail);
+    }
+
+    function fail(error) {
+        console.log(error);
+    }
 
     // take a photo from the camera
     $("#take-photo-button").tap(takePhoto);
@@ -66,5 +100,12 @@ $.when(pgReady, jqmReady).then(function() {
             }, applyEffect);
 
     $("#reset-button").on("tap", loadPhotoInCanvas);
+
+    $("#main").on("pagebeforehide", function() {
+        data = $("#photo").get(0).toDataURL("image/png");
+        $("#photo-2").attr("src", data);
+    });
+
+    $("#upload-button").on("tap", uploadPhoto);
 
 });
