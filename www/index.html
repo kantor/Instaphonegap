@@ -62,7 +62,12 @@
     </div>
 
     <div data-role="content">
-        <button id="upload-button" data-theme="b">Upload photo</button>
+        <div data-role="fieldcontain">
+            <label for="caption"></label>
+            <input type="text" name="caption" id="caption">
+        </div>
+
+        <button id="upload-button" data-theme="b">Share photo</button>
         <p id="message">
         </p>
         <img id="indicator" src="img/loader.gif" style="display:none"> 

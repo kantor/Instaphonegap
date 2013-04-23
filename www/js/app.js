@@ -55,6 +55,11 @@ $.when(pgReady, jqmReady).then(function() {
         uploadOptions.mimeType = "image/png";
         uploadOptions.chunkedMode = false;
 
+        var value = $("#caption").val();
+        uploadOptions.params = {
+            "caption": value
+        };
+
         var fileTransfer = new FileTransfer();
 
         //fileTransfer.upload(imageLoadedURI, "http://instaphonegap.appspot.com/upload",
